@@ -7,12 +7,17 @@ export default function DoctorAppointmentDetails() {
   const navigate = useNavigate();
   const [appointment, setAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notes, setNotes] = useState('');
+  const [prescription, setPrescription] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchAppointment = async () => {
       try {
         const response = await api.get(`/doctor/appointments/${id}`);
         setAppointment(response.data);
+        if (response.data.clinicalNotes) setNotes(response.data.clinicalNotes);
+        if (response.data.prescription) setPrescription(response.data.prescription);
       } catch (err) {
         console.error('Failed to fetch appointment', err);
         navigate('/doctor/dashboard');
@@ -27,9 +32,39 @@ export default function DoctorAppointmentDetails() {
     if (!window.confirm('Are you sure you want to cancel this appointment?')) return;
     try {
       await api.patch(`/appointments/${id}/cancel`);
-      navigate('/doctor/dashboard');
+      window.location.reload();
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to cancel appointment');
+    }
+  };
+
+  const handleComplete = async (e) => {
+    e.preventDefault();
+    if (!notes.trim() || !prescription.trim()) {
+      alert("Both clinical notes and prescription are required to complete the appointment.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await api.patch(`/doctor/appointments/${id}/complete`, {
+        clinicalNotes: notes,
+        prescription: prescription
+      });
+      window.location.reload();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to complete appointment');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleNoShow = async () => {
+    if (!window.confirm('Are you sure you want to mark this patient as a No-Show?')) return;
+    try {
+      await api.patch(`/doctor/appointments/${id}/no-show`);
+      window.location.reload();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to mark no-show');
     }
   };
 
@@ -96,7 +131,67 @@ export default function DoctorAppointmentDetails() {
           </div>
         )}
 
-        <div className="flex justify-end pt-6 border-t">
+        {appointment.status === 'CONFIRMED' && (
+          <form onSubmit={handleComplete} className="mb-8 p-6 bg-blue-50 rounded-xl border border-blue-100">
+            <h3 className="text-xl font-bold text-blue-900 mb-4">Complete Appointment</h3>
+            
+            <div className="mb-4">
+              <label className="block text-blue-800 font-semibold mb-2">Clinical Notes</label>
+              <textarea 
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" 
+                rows="4"
+                placeholder="Enter clinical notes..."
+                value={notes}
+                onChange={e => setNotes(e.target.value)}
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-blue-800 font-semibold mb-2">Prescription</label>
+              <textarea 
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" 
+                rows="3"
+                placeholder="Enter prescription instructions..."
+                value={prescription}
+                onChange={e => setPrescription(e.target.value)}
+                required
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={submitting}
+              className="px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            >
+              {submitting ? 'Saving...' : 'Mark as Completed'}
+            </button>
+          </form>
+        )}
+
+        {appointment.status === 'COMPLETED' && (
+          <div className="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Post-Visit Summary</h3>
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-700">Clinical Notes</h4>
+              <p className="text-gray-600 whitespace-pre-wrap">{appointment.clinicalNotes}</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-700">Prescription</h4>
+              <p className="text-gray-600 whitespace-pre-wrap italic">{appointment.prescription}</p>
+            </div>
+          </div>
+        )}
+
+        <div className="flex justify-end pt-6 border-t gap-4">
+          {appointment.status === 'CONFIRMED' && (
+            <button 
+              onClick={handleNoShow}
+              className="px-6 py-2 border border-purple-300 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition"
+            >
+              Mark No-Show
+            </button>
+          )}
           {(appointment.status === 'CONFIRMED' || appointment.status === 'HELD') && (
             <button 
               onClick={handleCancel}

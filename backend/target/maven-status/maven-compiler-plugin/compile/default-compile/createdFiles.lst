@@ -40,6 +40,7 @@ com\project\security\CustomUserDetailsService.class
 com\project\dto\response\UserResponse$UserResponseBuilder.class
 com\project\dto\response\DoctorResponse.class
 com\project\dto\response\DoctorLeaveResponse.class
+com\project\controller\DoctorSelfController.class
 com\project\entity\UrgencyLevel.class
 com\project\dto\request\LoginRequest$LoginRequestBuilder.class
 com\project\repository\UserRepository.class
@@ -50,6 +51,7 @@ com\project\config\DataSeeder.class
 com\project\controller\DoctorAppointmentController.class
 com\project\security\JwtAuthenticationEntryPoint.class
 com\project\dto\request\RegisterRequest$RegisterRequestBuilder.class
+com\project\dto\request\AppointmentCompleteRequest.class
 com\project\entity\Appointment.class
 com\project\HealthcareManagerApplication.class
 com\project\dto\response\AuthResponse$AuthResponseBuilder.class

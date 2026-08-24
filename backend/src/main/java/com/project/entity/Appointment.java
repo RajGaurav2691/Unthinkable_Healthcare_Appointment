@@ -53,6 +53,12 @@ public class Appointment {
     @Column(name = "urgency_level", length = 20)
     private UrgencyLevel urgencyLevel;
 
+    @Column(name = "clinical_notes", columnDefinition = "TEXT")
+    private String clinicalNotes;
+
+    @Column(name = "prescription", columnDefinition = "TEXT")
+    private String prescription;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

@@ -64,7 +64,7 @@ export default function PatientAppointments() {
         <div className="grid gap-6">
           {appointments.map(appt => (
             <div key={appt.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
+              <div className="flex-grow">
                 <div className="flex items-center gap-3 mb-2">
                   <h3 className="text-xl font-bold text-gray-800">Dr. {appt.doctorName}</h3>
                   <span className={`px-2 py-1 text-xs font-bold rounded border uppercase ${getStatusColor(appt.status)}`}>
@@ -80,6 +80,18 @@ export default function PatientAppointments() {
                   <p className="text-sm text-yellow-600 mt-2 font-semibold">
                     Payment/Confirmation pending. <Link to={`/patient/book/${appt.id}`} className="underline">Complete booking</Link>.
                   </p>
+                )}
+                {appt.status === 'COMPLETED' && (
+                  <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-100 w-full">
+                    <div className="mb-3">
+                      <h4 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Clinical Notes</h4>
+                      <p className="text-gray-600 mt-1 whitespace-pre-wrap">{appt.clinicalNotes || "No notes provided."}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-700 text-sm uppercase tracking-wide">Prescription</h4>
+                      <p className="text-gray-600 mt-1 whitespace-pre-wrap italic">{appt.prescription || "No prescription issued."}</p>
+                    </div>
+                  </div>
                 )}
               </div>
               

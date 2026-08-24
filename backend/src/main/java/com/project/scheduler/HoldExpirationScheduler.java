@@ -28,7 +28,7 @@ public class HoldExpirationScheduler {
         if (!expiredHolds.isEmpty()) {
             log.info("Found {} expired holds to release", expiredHolds.size());
             for (Appointment appointment : expiredHolds) {
-                appointment.setStatus(AppointmentStatus.CANCELLED);
+                appointment.setStatus(AppointmentStatus.EXPIRED);
                 appointmentRepository.save(appointment);
                 log.info("Released hold for appointment ID: {}", appointment.getId());
             }

@@ -11,8 +11,10 @@ import PatientDoctorSearch from './pages/patient/PatientDoctorSearch';
 import DoctorProfile from './pages/patient/DoctorProfile';
 import BookingFlow from './pages/patient/BookingFlow';
 import PatientAppointments from './pages/patient/PatientAppointments';
+import PatientDashboard from './pages/patient/PatientDashboard';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorAppointmentDetails from './pages/Doctor/DoctorAppointmentDetails';
+import DoctorProfileManager from './pages/Doctor/DoctorProfileManager';
 
 const Navigation = () => {
   const { user, logout } = useAuth();
@@ -32,13 +34,15 @@ const Navigation = () => {
           <div className="flex items-center space-x-4">
             {user.role === 'PATIENT' && (
               <>
-                <Link to="/patient/dashboard" className="text-gray-600 hover:text-blue-600 font-semibold">Find Doctors</Link>
+                <Link to="/patient/dashboard" className="text-gray-600 hover:text-blue-600 font-semibold">Dashboard</Link>
+                <Link to="/patient/doctors" className="text-gray-600 hover:text-blue-600 font-semibold">Find Doctors</Link>
                 <Link to="/patient/appointments" className="text-gray-600 hover:text-blue-600 font-semibold">My Appointments</Link>
               </>
             )}
             {user.role === 'DOCTOR' && (
               <>
                 <Link to="/doctor/dashboard" className="text-gray-600 hover:text-blue-600 font-semibold">Dashboard</Link>
+                <Link to="/doctor/profile" className="text-gray-600 hover:text-blue-600 font-semibold">Profile & Schedule</Link>
               </>
             )}
             {user.role === 'ADMIN' && (
@@ -68,6 +72,12 @@ function App() {
               <Route path="/register" element={<Register />} />
               
               <Route path="/patient/dashboard" element={
+                <RoleRoute allowedRoles={['PATIENT']}>
+                  <PatientDashboard />
+                </RoleRoute>
+              } />
+
+              <Route path="/patient/doctors" element={
                 <RoleRoute allowedRoles={['PATIENT']}>
                   <PatientDoctorSearch />
                 </RoleRoute>
@@ -100,6 +110,12 @@ function App() {
               <Route path="/doctor/appointments/:id" element={
                 <RoleRoute allowedRoles={['DOCTOR']}>
                   <DoctorAppointmentDetails />
+                </RoleRoute>
+              } />
+
+              <Route path="/doctor/profile" element={
+                <RoleRoute allowedRoles={['DOCTOR']}>
+                  <DoctorProfileManager />
                 </RoleRoute>
               } />
 

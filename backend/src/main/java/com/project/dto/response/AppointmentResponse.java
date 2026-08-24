@@ -30,5 +30,7 @@ public class AppointmentResponse {
     private String symptoms;
     private String aiSummary;
     private UrgencyLevel urgencyLevel;
+    private String clinicalNotes;
+    private String prescription;
     private LocalDateTime createdAt;
 }

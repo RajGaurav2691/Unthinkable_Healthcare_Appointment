@@ -23,6 +23,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.project.dto.request.AppointmentCompleteRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -134,6 +135,45 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
+    @Transactional
+    public AppointmentResponse completeAppointment(Long appointmentId, AppointmentCompleteRequest request, String doctorEmail) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment not found"));
+
+        if (!appointment.getDoctor().getUser().getEmail().equals(doctorEmail)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized to complete this appointment");
+        }
+
+        if (appointment.getStatus() != AppointmentStatus.CONFIRMED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only CONFIRMED appointments can be completed");
+        }
+
+        appointment.setClinicalNotes(request.getClinicalNotes());
+        appointment.setPrescription(request.getPrescription());
+        appointment.setStatus(AppointmentStatus.COMPLETED);
+
+        appointment = appointmentRepository.save(appointment);
+        return mapToResponse(appointment);
+    }
+
+    @Transactional
+    public AppointmentResponse markNoShow(Long appointmentId, String doctorEmail) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment not found"));
+
+        if (!appointment.getDoctor().getUser().getEmail().equals(doctorEmail)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized to modify this appointment");
+        }
+
+        if (appointment.getStatus() != AppointmentStatus.CONFIRMED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only CONFIRMED appointments can be marked as NO_SHOW");
+        }
+
+        appointment.setStatus(AppointmentStatus.NO_SHOW);
+        appointment = appointmentRepository.save(appointment);
+        return mapToResponse(appointment);
+    }
+
     public List<AppointmentResponse> getPatientAppointments(String email) {
         User patient = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found"));
@@ -184,6 +224,8 @@ public class AppointmentService {
                 .symptoms(appointment.getSymptoms())
                 .aiSummary(appointment.getAiSummary())
                 .urgencyLevel(appointment.getUrgencyLevel())
+                .clinicalNotes(appointment.getClinicalNotes())
+                .prescription(appointment.getPrescription())
                 .createdAt(appointment.getCreatedAt())
                 .build();
     }

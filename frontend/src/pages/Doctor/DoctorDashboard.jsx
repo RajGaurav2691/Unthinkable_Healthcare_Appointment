@@ -58,9 +58,50 @@ export default function DoctorDashboard() {
           You don't have any appointments booked yet.
         </div>
       ) : (
-        <div className="grid gap-6">
-          {appointments.map(appt => (
-            <div key={appt.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="space-y-8">
+          <div>
+            <h4 className="text-xl font-bold text-blue-800 mb-3 border-b pb-2">Today's Appointments</h4>
+            {appointments.filter(a => a.appointmentDate === new Date().toISOString().split('T')[0]).length === 0 ? (
+                <p className="text-gray-500 italic">No appointments scheduled for today.</p>
+            ) : (
+                <div className="grid gap-6">
+                  {appointments.filter(a => a.appointmentDate === new Date().toISOString().split('T')[0]).map(appt => (
+                    <AppointmentCard key={appt.id} appt={appt} getStatusColor={getStatusColor} getUrgencyColor={getUrgencyColor} />
+                  ))}
+                </div>
+            )}
+          </div>
+
+          <div>
+            <h4 className="text-xl font-bold text-gray-800 mb-3 border-b pb-2">Upcoming Appointments</h4>
+            {appointments.filter(a => a.appointmentDate > new Date().toISOString().split('T')[0]).length === 0 ? (
+                <p className="text-gray-500 italic">No upcoming appointments.</p>
+            ) : (
+                <div className="grid gap-6">
+                  {appointments.filter(a => a.appointmentDate > new Date().toISOString().split('T')[0]).map(appt => (
+                    <AppointmentCard key={appt.id} appt={appt} getStatusColor={getStatusColor} getUrgencyColor={getUrgencyColor} />
+                  ))}
+                </div>
+            )}
+          </div>
+          
+          <div>
+            <h4 className="text-xl font-bold text-gray-800 mb-3 border-b pb-2">Past Appointments</h4>
+            <div className="grid gap-6">
+              {appointments.filter(a => a.appointmentDate < new Date().toISOString().split('T')[0]).map(appt => (
+                <AppointmentCard key={appt.id} appt={appt} getStatusColor={getStatusColor} getUrgencyColor={getUrgencyColor} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AppointmentCard({ appt, getStatusColor, getUrgencyColor }) {
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <h3 className="text-xl font-bold text-gray-800">{appt.patientName}</h3>
@@ -95,9 +136,5 @@ export default function DoctorDashboard() {
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
   );
 }

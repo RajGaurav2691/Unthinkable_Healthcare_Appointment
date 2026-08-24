@@ -3,9 +3,11 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AdminDoctorController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AuthController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\DoctorAppointmentController.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\DoctorSelfController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\HealthController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\PatientAppointmentController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\PatientDoctorController.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\dto\request\AppointmentCompleteRequest.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\dto\request\ConfirmRequest.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\dto\request\DoctorCreateRequest.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\dto\request\DoctorUpdateRequest.java
