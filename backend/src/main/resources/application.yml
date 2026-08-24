@@ -19,3 +19,7 @@ application:
     api-url: ${LLM_API_URL:https://generativelanguage.googleapis.com/v1beta}
     api-key: ${LLM_API_KEY:}
     model: ${LLM_MODEL:gemini-1.5-flash}
+  email:
+    enabled: ${EMAIL_ENABLED:false}
+    sendgrid-api-key: ${SENDGRID_API_KEY:}
+    from-email: ${EMAIL_FROM:noreply@example.com}

@@ -27,6 +27,13 @@ import com.project.dto.request.AppointmentCompleteRequest;
 import com.project.service.LlmIntegrationService.PreVisitLlmResult;
 import com.project.dto.request.AppointmentCompleteRequest;
 
+import com.project.entity.MedicationFrequency;
+import com.project.entity.MedicationSchedule;
+import com.project.entity.NotificationType;
+import com.project.repository.MedicationScheduleRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 @RequiredArgsConstructor
 public class AppointmentService {
@@ -36,6 +43,9 @@ public class AppointmentService {
     private final UserRepository userRepository;
     private final DoctorAvailabilityService availabilityService;
     private final LlmIntegrationService llmIntegrationService;
+    private final NotificationService notificationService;
+    private final MedicationScheduleRepository medicationScheduleRepository;
+    private final ObjectMapper objectMapper;
 
     @Transactional
     public AppointmentResponse holdSlot(HoldRequest request, String patientEmail) {
@@ -111,6 +121,12 @@ public class AppointmentService {
         appointment.setStatus(AppointmentStatus.CONFIRMED);
 
         appointment = appointmentRepository.save(appointment);
+
+        String subject = "Appointment Confirmed with Dr. " + appointment.getDoctor().getUser().getName();
+        String body = String.format("Dear %s,\n\nYour appointment is confirmed for %s at %s.\n\nThank you.", 
+                appointment.getPatient().getName(), appointment.getAppointmentDate(), appointment.getStartTime());
+        notificationService.queueNotification(patientEmail, NotificationType.APPOINTMENT_CONFIRMATION, subject, body, appointment);
+
         return mapToResponse(appointment);
     }
 
@@ -136,6 +152,16 @@ public class AppointmentService {
 
         appointment.setStatus(AppointmentStatus.CANCELLED);
         appointmentRepository.save(appointment);
+
+        String patientSubject = "Appointment Cancelled";
+        String patientBody = String.format("Dear %s,\n\nYour appointment on %s with Dr. %s has been cancelled.", 
+                appointment.getPatient().getName(), appointment.getAppointmentDate(), appointment.getDoctor().getUser().getName());
+        notificationService.queueNotification(appointment.getPatient().getEmail(), NotificationType.APPOINTMENT_CANCELLATION, patientSubject, patientBody, appointment);
+
+        String doctorSubject = "Appointment Cancelled by Patient";
+        String doctorBody = String.format("Dear Dr. %s,\n\nThe appointment on %s at %s with patient %s has been cancelled.",
+                appointment.getDoctor().getUser().getName(), appointment.getAppointmentDate(), appointment.getStartTime(), appointment.getPatient().getName());
+        notificationService.queueNotification(appointment.getDoctor().getUser().getEmail(), NotificationType.APPOINTMENT_CANCELLATION, doctorSubject, doctorBody, appointment);
     }
 
     @Transactional
@@ -159,6 +185,31 @@ public class AppointmentService {
         appointment.setStatus(AppointmentStatus.COMPLETED);
 
         appointment = appointmentRepository.save(appointment);
+
+        // Parse medications and create MedicationSchedule records
+        try {
+            JsonNode root = objectMapper.readTree(postVisitSummary);
+            if (root.has("medications") && root.get("medications").isArray()) {
+                for (JsonNode medNode : root.get("medications")) {
+                    String medName = medNode.has("name") ? medNode.get("name").asText() : "Unknown";
+                    String medDosage = medNode.has("dosage") ? medNode.get("dosage").asText() : "As directed";
+                    
+                    MedicationSchedule schedule = MedicationSchedule.builder()
+                            .patient(appointment.getPatient())
+                            .appointment(appointment)
+                            .medicationName(medName)
+                            .dosage(medDosage)
+                            .frequency(MedicationFrequency.CUSTOM) // Default to custom, dosage has full instructions
+                            .active(true)
+                            .startDate(LocalDate.now().atStartOfDay())
+                            .build();
+                    medicationScheduleRepository.save(schedule);
+                }
+            }
+        } catch (Exception e) {
+            // Ignore parse errors, just don't schedule automated reminders
+        }
+
         return mapToResponse(appointment);
     }
 

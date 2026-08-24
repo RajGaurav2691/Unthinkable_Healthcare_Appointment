@@ -26,4 +26,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("SELECT COUNT(a) > 0 FROM Appointment a WHERE a.doctor.id = :doctorId AND a.appointmentDate = :date AND a.startTime = :time AND a.status IN ('HELD', 'CONFIRMED', 'COMPLETED', 'NO_SHOW')")
     boolean existsActiveAppointment(@Param("doctorId") Long doctorId, @Param("date") LocalDate date, @Param("time") java.time.LocalTime time);
+
+    @Query("SELECT a FROM Appointment a WHERE a.status = 'CONFIRMED' AND a.appointmentDate = :date")
+    List<Appointment> findConfirmedAppointmentsForDate(@Param("date") LocalDate date);
 }

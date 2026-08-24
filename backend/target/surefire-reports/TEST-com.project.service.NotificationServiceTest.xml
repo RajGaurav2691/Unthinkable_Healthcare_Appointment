@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.project.controller.AuthControllerTest" time="37.987" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.project.service.NotificationServiceTest" time="0.237" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -47,7 +47,7 @@
     <property name="localRepository" value="C:\Users\rajga\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\rajga\AppData\Local\Temp\"/>
-    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="com.zaxxer.hikari.pool_number" value="3"/>
     <property name="java.version" value="21"/>
     <property name="user.dir" value="C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend"/>
     <property name="os.arch" value="amd64"/>
@@ -65,55 +65,16 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[healthcare-manager] "/>
   </properties>
-  <testcase name="shouldLoginSuccessfully" classname="com.project.controller.AuthControllerTest" time="3.535">
-    <system-out><![CDATA[21:54:19.022 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.project.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-21:54:19.306 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.project.HealthcareManagerApplication for test class com.project.controller.AuthControllerTest
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
-
- :: Spring Boot ::                (v3.3.2)
-
-2026-08-24T21:54:20.290+05:30  INFO 6192 --- [healthcare-manager] [           main] c.project.controller.AuthControllerTest  : Starting AuthControllerTest using Java 21 with PID 6192 (started by rajga in C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend)
-2026-08-24T21:54:20.291+05:30  INFO 6192 --- [healthcare-manager] [           main] c.project.controller.AuthControllerTest  : The following 1 profile is active: "test"
-2026-08-24T21:54:24.739+05:30  INFO 6192 --- [healthcare-manager] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-08-24T21:54:25.086+05:30  INFO 6192 --- [healthcare-manager] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 315 ms. Found 7 JPA repository interfaces.
-2026-08-24T21:54:28.260+05:30  INFO 6192 --- [healthcare-manager] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-08-24T21:54:28.599+05:30  INFO 6192 --- [healthcare-manager] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2026-08-24T21:54:28.832+05:30  INFO 6192 --- [healthcare-manager] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-08-24T21:54:30.860+05:30  INFO 6192 --- [healthcare-manager] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-08-24T21:54:31.043+05:30  INFO 6192 --- [healthcare-manager] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-08-24T21:54:31.820+05:30  INFO 6192 --- [healthcare-manager] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-08-24T21:54:31.823+05:30  INFO 6192 --- [healthcare-manager] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-08-24T21:54:31.997+05:30  WARN 6192 --- [healthcare-manager] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-08-24T21:54:37.194+05:30  INFO 6192 --- [healthcare-manager] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-08-24T21:54:37.462+05:30  INFO 6192 --- [healthcare-manager] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-08-24T21:54:39.192+05:30  INFO 6192 --- [healthcare-manager] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-08-24T21:54:43.429+05:30  INFO 6192 --- [healthcare-manager] [           main] com.project.config.EmailConfig           : Initializing MockEmailService (email.enabled is false or API key is missing)
-2026-08-24T21:54:43.742+05:30  INFO 6192 --- [healthcare-manager] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2026-08-24T21:54:43.744+05:30  WARN 6192 --- [healthcare-manager] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2026-08-24T21:54:43.781+05:30  INFO 6192 --- [healthcare-manager] [           main] com.project.config.LlmConfig             : Initializing MockLlmProvider (provider set to 'mock' or API key is missing)
-2026-08-24T21:54:44.107+05:30  WARN 6192 --- [healthcare-manager] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-08-24T21:54:45.900+05:30  INFO 6192 --- [healthcare-manager] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
-2026-08-24T21:54:50.020+05:30  INFO 6192 --- [healthcare-manager] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-08-24T21:54:50.021+05:30  INFO 6192 --- [healthcare-manager] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-08-24T21:54:50.026+05:30  INFO 6192 --- [healthcare-manager] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
-2026-08-24T21:54:50.564+05:30  INFO 6192 --- [healthcare-manager] [           main] c.project.controller.AuthControllerTest  : Started AuthControllerTest in 31.029 seconds (process running for 33.116)
-2026-08-24T21:54:51.419+05:30  INFO 6192 --- [healthcare-manager] [   scheduling-1] c.project.scheduler.ReminderScheduler    : Checking appointment reminders for 2026-08-25 (Found: 0)
-Default admin user seeded.
+  <testcase name="processNotification_success" classname="com.project.service.NotificationServiceTest" time="0.218">
+    <system-out><![CDATA[2026-08-24T21:55:03.506+05:30  INFO 6192 --- [healthcare-manager] [           main] c.project.service.NotificationService    : Successfully processed notification ID null
 ]]></system-out>
-    <system-err><![CDATA[Warning: Could not create unique index. If it already exists, this is fine. StatementCallback; bad SQL grammar [CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_active_appointment ON appointments (doctor_profile_id, appointment_date, start_time) WHERE status IN ('HELD', 'CONFIRMED', 'COMPLETED', 'NO_SHOW');]
-WARNING: A Java agent has been loaded dynamically (C:\Users\rajga\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.18\byte-buddy-agent-1.14.18.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
   </testcase>
-  <testcase name="shouldFailLoginWithWrongPassword" classname="com.project.controller.AuthControllerTest" time="0.584"/>
-  <testcase name="shouldRegisterPatientSuccessfully" classname="com.project.controller.AuthControllerTest" time="0.352"/>
-  <testcase name="shouldFailRegistrationIfEmailExists" classname="com.project.controller.AuthControllerTest" time="0.262"/>
+  <testcase name="queueNotification_savesPendingNotification" classname="com.project.service.NotificationServiceTest" time="0.008">
+    <system-out><![CDATA[2026-08-24T21:55:03.528+05:30  INFO 6192 --- [healthcare-manager] [           main] c.project.service.NotificationService    : Queued GENERAL notification for test@example.com
+]]></system-out>
+  </testcase>
+  <testcase name="processNotification_failure" classname="com.project.service.NotificationServiceTest" time="0.005">
+    <system-out><![CDATA[2026-08-24T21:55:03.539+05:30 ERROR 6192 --- [healthcare-manager] [           main] c.project.service.NotificationService    : Failed to process notification ID null: API Error
+]]></system-out>
+  </testcase>
 </testsuite>

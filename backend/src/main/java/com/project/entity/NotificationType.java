@@ -1,0 +1,11 @@
+package com.project.entity;
+
+public enum NotificationType {
+    APPOINTMENT_CONFIRMATION,
+    APPOINTMENT_CANCELLATION,
+    APPOINTMENT_REMINDER,
+    DOCTOR_LEAVE,
+    RESCHEDULED,
+    MEDICATION_REMINDER,
+    GENERAL
+}

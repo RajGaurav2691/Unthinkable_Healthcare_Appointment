@@ -1,4 +1,5 @@
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\DataSeeder.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\EmailConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\LlmConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\SecurityConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AdminDoctorController.java
@@ -28,6 +29,11 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\AppointmentStatus.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\DoctorLeave.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\DoctorProfile.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\MedicationFrequency.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\MedicationSchedule.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\Notification.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\NotificationStatus.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\NotificationType.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\Role.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\UrgencyLevel.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\User.java
@@ -37,9 +43,13 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\AppointmentRepository.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\DoctorLeaveRepository.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\DoctorProfileRepository.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\MedicationScheduleRepository.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\NotificationRepository.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\UserRepository.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\WorkingScheduleRepository.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\scheduler\EmailRetryScheduler.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\scheduler\HoldExpirationScheduler.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\scheduler\ReminderScheduler.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\security\CustomUserDetailsService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\security\JwtAuthenticationEntryPoint.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\security\JwtAuthenticationFilter.java
@@ -48,7 +58,11 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\AuthService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\DoctorAdminService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\DoctorAvailabilityService.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\email\EmailService.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\email\MockEmailService.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\email\SendGridEmailService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\llm\GeminiLlmProvider.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\llm\LlmProvider.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\llm\MockLlmProvider.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\LlmIntegrationService.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\NotificationService.java

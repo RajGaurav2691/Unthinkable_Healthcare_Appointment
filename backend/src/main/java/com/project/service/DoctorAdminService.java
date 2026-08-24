@@ -24,6 +24,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.project.entity.Appointment;
+import com.project.entity.AppointmentStatus;
+import com.project.entity.NotificationType;
+import com.project.repository.AppointmentRepository;
+
 @Service
 @RequiredArgsConstructor
 public class DoctorAdminService {
@@ -32,6 +37,8 @@ public class DoctorAdminService {
     private final UserRepository userRepository;
     private final DoctorLeaveRepository doctorLeaveRepository;
     private final WorkingScheduleRepository workingScheduleRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final NotificationService notificationService;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -143,6 +150,21 @@ public class DoctorAdminService {
                 .reason(request.getReason())
                 .build();
         leave = doctorLeaveRepository.save(leave);
+
+        // Cancel appointments on this date
+        List<Appointment> affectedAppointments = appointmentRepository.findByDoctorIdAndAppointmentDateOrderByStartTimeAsc(id, request.getLeaveDate());
+        for (Appointment appt : affectedAppointments) {
+            if (appt.getStatus() == AppointmentStatus.CONFIRMED || appt.getStatus() == AppointmentStatus.HELD) {
+                appt.setStatus(AppointmentStatus.CANCELLED);
+                appointmentRepository.save(appt);
+                
+                String subject = "Important: Appointment Cancelled due to Doctor Leave";
+                String body = String.format("Dear %s,\n\nWe regret to inform you that your appointment on %s at %s has been cancelled because Dr. %s is on leave. Please reschedule your appointment.",
+                        appt.getPatient().getName(), appt.getAppointmentDate(), appt.getStartTime(), profile.getUser().getName());
+                
+                notificationService.queueNotification(appt.getPatient().getEmail(), NotificationType.DOCTOR_LEAVE, subject, body, appt);
+            }
+        }
 
         return DoctorLeaveResponse.builder()
                 .id(leave.getId())

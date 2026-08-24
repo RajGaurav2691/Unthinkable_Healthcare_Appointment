@@ -41,6 +41,12 @@ LLM_PROVIDER=mock
 LLM_API_KEY=your_gemini_api_key_here
 LLM_API_URL=https://generativelanguage.googleapis.com/v1beta
 LLM_MODEL=gemini-1.5-flash
+
+# Phase 7: Email Configuration
+# Set EMAIL_ENABLED to false for local dev (logs emails instead of sending)
+EMAIL_ENABLED=false
+SENDGRID_API_KEY=your_sendgrid_api_key
+EMAIL_FROM=noreply@example.com
 ```
 
 ## Authentication Setup (Phase 2)
