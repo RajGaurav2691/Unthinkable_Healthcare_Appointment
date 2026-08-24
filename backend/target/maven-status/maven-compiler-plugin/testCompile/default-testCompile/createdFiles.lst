@@ -1,0 +1,5 @@
+com\project\HealthcareManagerApplicationTests.class
+com\project\service\DoctorAvailabilityServiceTest.class
+com\project\integration\DatabaseConnectionTest.class
+com\project\controller\AuthControllerTest.class
+com\project\service\AppointmentConcurrencyTest.class

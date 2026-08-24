@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../../api/axiosConfig';
 
 export default function DoctorProfile() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [doctor, setDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const [holding, setHolding] = useState(false);
   
   useEffect(() => {
     // Set default date to today
@@ -41,6 +43,23 @@ export default function DoctorProfile() {
       setSlots([]);
     } finally {
       setLoadingSlots(false);
+    }
+  };
+
+  const handleSlotClick = async (slot) => {
+    setHolding(true);
+    try {
+      const response = await api.post('/appointments/hold', {
+        doctorId: doctor.id,
+        appointmentDate: selectedDate,
+        startTime: slot.startTime
+      });
+      navigate(`/patient/book/${response.data.id}`);
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to hold slot. It might be already booked.');
+      fetchAvailability(selectedDate);
+    } finally {
+      setHolding(false);
     }
   };
 
@@ -90,8 +109,10 @@ export default function DoctorProfile() {
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
               {slots.map((slot, index) => (
                 <button 
-                  key={index} 
-                  className="py-2 px-3 border border-blue-200 text-blue-700 rounded-lg hover:bg-blue-600 hover:text-white transition font-semibold"
+                  key={index}
+                  onClick={() => handleSlotClick(slot)}
+                  disabled={holding}
+                  className="py-2 px-3 border border-blue-200 text-blue-700 rounded-lg hover:bg-blue-600 hover:text-white transition font-semibold disabled:opacity-50"
                   title={slot.status}
                 >
                   {slot.startTime.substring(0, 5)}

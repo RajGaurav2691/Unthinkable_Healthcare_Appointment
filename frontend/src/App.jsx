@@ -9,6 +9,10 @@ import AdminDoctors from './pages/admin/AdminDoctors';
 import AdminDoctorForm from './pages/admin/AdminDoctorForm';
 import PatientDoctorSearch from './pages/patient/PatientDoctorSearch';
 import DoctorProfile from './pages/patient/DoctorProfile';
+import BookingFlow from './pages/patient/BookingFlow';
+import PatientAppointments from './pages/patient/PatientAppointments';
+import DoctorDashboard from './pages/Doctor/DoctorDashboard';
+import DoctorAppointmentDetails from './pages/Doctor/DoctorAppointmentDetails';
 
 const Navigation = () => {
   const { user, logout } = useAuth();
@@ -26,8 +30,24 @@ const Navigation = () => {
           </>
         ) : (
           <div className="flex items-center space-x-4">
-            <span className="text-gray-600">Hello, {user.name} ({user.role})</span>
-            <button onClick={logout} className="text-red-500 hover:text-red-700">Logout</button>
+            {user.role === 'PATIENT' && (
+              <>
+                <Link to="/patient/dashboard" className="text-gray-600 hover:text-blue-600 font-semibold">Find Doctors</Link>
+                <Link to="/patient/appointments" className="text-gray-600 hover:text-blue-600 font-semibold">My Appointments</Link>
+              </>
+            )}
+            {user.role === 'DOCTOR' && (
+              <>
+                <Link to="/doctor/dashboard" className="text-gray-600 hover:text-blue-600 font-semibold">Dashboard</Link>
+              </>
+            )}
+            {user.role === 'ADMIN' && (
+              <>
+                <Link to="/admin/dashboard" className="text-gray-600 hover:text-blue-600 font-semibold">Admin Dashboard</Link>
+              </>
+            )}
+            <span className="text-gray-500 border-l pl-4">Hello, {user.name}</span>
+            <button onClick={logout} className="text-red-500 hover:text-red-700 font-semibold">Logout</button>
           </div>
         )}
       </div>
@@ -58,10 +78,28 @@ function App() {
                   <DoctorProfile />
                 </RoleRoute>
               } />
+
+              <Route path="/patient/book/:id" element={
+                <RoleRoute allowedRoles={['PATIENT']}>
+                  <BookingFlow />
+                </RoleRoute>
+              } />
+
+              <Route path="/patient/appointments" element={
+                <RoleRoute allowedRoles={['PATIENT']}>
+                  <PatientAppointments />
+                </RoleRoute>
+              } />
               
               <Route path="/doctor/dashboard" element={
                 <RoleRoute allowedRoles={['DOCTOR']}>
-                  <div className="p-10 text-2xl text-center">Doctor Dashboard (Protected)</div>
+                  <DoctorDashboard />
+                </RoleRoute>
+              } />
+
+              <Route path="/doctor/appointments/:id" element={
+                <RoleRoute allowedRoles={['DOCTOR']}>
+                  <DoctorAppointmentDetails />
                 </RoleRoute>
               } />
 
