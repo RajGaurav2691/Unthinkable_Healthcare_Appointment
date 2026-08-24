@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.project.service.AppointmentConcurrencyTest" time="0.213" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.project.integration.FullSystemE2ETest" time="1.308" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -65,9 +65,13 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[healthcare-manager] "/>
   </properties>
-  <testcase name="testConcurrentBooking" classname="com.project.service.AppointmentConcurrencyTest" time="0.195">
-    <system-out><![CDATA[2026-08-24T22:28:46.809+05:30  INFO 22620 --- [healthcare-manager] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.project.service.AppointmentConcurrencyTest]: AppointmentConcurrencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-08-24T22:28:46.819+05:30  INFO 22620 --- [healthcare-manager] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.project.HealthcareManagerApplication for test class com.project.service.AppointmentConcurrencyTest
+  <testcase name="shouldPerformE2EHealthcareJourney" classname="com.project.integration.FullSystemE2ETest" time="1.291">
+    <system-out><![CDATA[2026-08-24T22:28:45.499+05:30  INFO 22620 --- [healthcare-manager] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.project.integration.FullSystemE2ETest]: FullSystemE2ETest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-08-24T22:28:45.505+05:30  INFO 22620 --- [healthcare-manager] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.project.HealthcareManagerApplication for test class com.project.integration.FullSystemE2ETest
+2026-08-24T22:28:46.697+05:30  INFO 22620 --- [healthcare-manager] [           main] c.project.service.NotificationService    : Queued APPOINTMENT_CONFIRMATION notification for alice@example.com
+2026-08-24T22:28:46.700+05:30  INFO 22620 --- [healthcare-manager] [         task-1] c.project.service.CalendarSyncService    : Starting async sync for appointment creation ID 1
+2026-08-24T22:28:46.706+05:30  INFO 22620 --- [healthcare-manager] [         task-1] c.p.s.calendar.MockCalendarService       : MockCalendarService: createEvent for user 2624fc20-89e5-4822-a34d-83ec87cf4b74 (patient) -> Generated Event ID mock-event-id-5a4de265
+2026-08-24T22:28:46.706+05:30  INFO 22620 --- [healthcare-manager] [         task-1] c.p.s.calendar.MockCalendarService       : MockCalendarService: createEvent for user 65602805-c949-4d98-9ba8-8da4b060fa54 (doctor) -> Generated Event ID mock-event-id-e5bed177
 ]]></system-out>
   </testcase>
 </testsuite>

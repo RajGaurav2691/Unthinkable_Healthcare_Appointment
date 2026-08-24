@@ -6,7 +6,10 @@ import com.project.entity.Role;
 import com.project.entity.User;
 import com.project.entity.WorkingSchedule;
 import com.project.repository.AppointmentRepository;
+import com.project.repository.CalendarEventRepository;
 import com.project.repository.DoctorProfileRepository;
+import com.project.repository.MedicationScheduleRepository;
+import com.project.repository.NotificationRepository;
 import com.project.repository.UserRepository;
 import com.project.repository.WorkingScheduleRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -45,6 +48,15 @@ public class AppointmentConcurrencyTest {
     @Autowired
     private WorkingScheduleRepository workingScheduleRepository;
 
+    @Autowired
+    private CalendarEventRepository calendarEventRepository;
+
+    @Autowired
+    private MedicationScheduleRepository medicationScheduleRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
     private DoctorProfile doctor;
     private List<User> patients = new ArrayList<>();
     private LocalDate testDate;
@@ -52,45 +64,67 @@ public class AppointmentConcurrencyTest {
 
     @BeforeEach
     void setUp() {
+        medicationScheduleRepository.deleteAll();
+        notificationRepository.deleteAll();
+        calendarEventRepository.deleteAll();
         appointmentRepository.deleteAll();
         workingScheduleRepository.deleteAll();
         doctorProfileRepository.deleteAll();
         userRepository.deleteAll();
 
         // Create Doctor
-        User doctorUser = userRepository.save(User.builder().name("Dr. Test").email("drtest@test.com").password("pass").role(Role.DOCTOR).enabled(true).build());
-        doctor = doctorProfileRepository.save(DoctorProfile.builder()
-                .user(doctorUser)
-                .specialization("Test")
+        User docUser = User.builder()
+                .name("Dr. Smith")
+                .email("smith@example.com")
+                .password("password123")
+                .role(Role.DOCTOR)
+                .enabled(true)
+                .build();
+        docUser = userRepository.save(docUser);
+
+        doctor = DoctorProfile.builder()
+                .user(docUser)
+                .specialization("General")
                 .qualification("MD")
                 .experience(10)
                 .consultationDuration(30)
                 .activeStatus(true)
-                .build());
-        
-        testDate = LocalDate.now().plusDays(1);
-        testTime = LocalTime.of(10, 0);
+                .build();
+        doctor = doctorProfileRepository.save(doctor);
 
-        workingScheduleRepository.save(WorkingSchedule.builder()
+        WorkingSchedule ws = WorkingSchedule.builder()
                 .doctorProfile(doctor)
-                .dayOfWeek(testDate.getDayOfWeek())
-                .startTime(testTime)
-                .endTime(LocalTime.of(12, 0))
-                .build());
+                .dayOfWeek(java.time.DayOfWeek.MONDAY)
+                .startTime(LocalTime.of(9, 0))
+                .endTime(LocalTime.of(17, 0))
+                .build();
+        workingScheduleRepository.save(ws);
 
-        // Create 10 Patients
+        // Patients
         for (int i = 0; i < 10; i++) {
-            User patient = userRepository.save(User.builder().name("Patient " + i).email("patient" + i + "@test.com").password("pass").role(Role.PATIENT).enabled(true).build());
-            patients.add(patient);
+            User p = User.builder()
+                    .name("Patient " + i)
+                    .email("patient" + i + "@example.com")
+                    .password("password123")
+                    .role(Role.PATIENT)
+                    .enabled(true)
+                    .build();
+            patients.add(userRepository.save(p));
         }
+
+        testDate = LocalDate.now().plusDays(1);
+        while (testDate.getDayOfWeek() != java.time.DayOfWeek.MONDAY) {
+            testDate = testDate.plusDays(1);
+        }
+        testTime = LocalTime.of(10, 0);
     }
 
     @AfterEach
     void tearDown() {
+        medicationScheduleRepository.deleteAll();
+        notificationRepository.deleteAll();
+        calendarEventRepository.deleteAll();
         appointmentRepository.deleteAll();
-        workingScheduleRepository.deleteAll();
-        doctorProfileRepository.deleteAll();
-        userRepository.deleteAll();
     }
 
     @Test

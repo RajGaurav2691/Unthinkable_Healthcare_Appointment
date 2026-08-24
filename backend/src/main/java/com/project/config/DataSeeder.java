@@ -47,5 +47,22 @@ public class DataSeeder implements CommandLineRunner {
         } catch (Exception e) {
             System.err.println("Warning: Could not create unique index. If it already exists, this is fine. " + e.getMessage());
         }
+
+        // Phase 9: Performance indexes for common query patterns
+        String[] indexes = {
+            "CREATE INDEX IF NOT EXISTS idx_appointments_doctor_id ON appointments(doctor_profile_id)",
+            "CREATE INDEX IF NOT EXISTS idx_appointments_patient_id ON appointments(patient_id)",
+            "CREATE INDEX IF NOT EXISTS idx_appointments_date ON appointments(appointment_date)",
+            "CREATE INDEX IF NOT EXISTS idx_appointments_status ON appointments(status)",
+            "CREATE INDEX IF NOT EXISTS idx_notifications_status ON notifications(status)",
+            "CREATE INDEX IF NOT EXISTS idx_notifications_recipient ON notifications(recipient)"
+        };
+        for (String sql : indexes) {
+            try {
+                jdbcTemplate.execute(sql);
+            } catch (Exception e) {
+                System.err.println("Index creation warning: " + e.getMessage());
+            }
+        }
     }
 }

@@ -5,4 +5,5 @@ com\project\service\NotificationServiceTest.class
 com\project\controller\AuthControllerTest.class
 com\project\integration\DatabaseConnectionTest.class
 com\project\service\CalendarSyncServiceTest.class
+com\project\integration\FullSystemE2ETest.class
 com\project\service\AppointmentConcurrencyTest.class

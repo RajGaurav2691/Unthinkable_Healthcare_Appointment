@@ -21,6 +21,7 @@ com\project\dto\request\ConfirmRequest.class
 com\project\entity\Role.class
 com\project\service\AuthService.class
 com\project\dto\response\WorkingScheduleResponse$WorkingScheduleResponseBuilder.class
+com\project\exception\ApiError.class
 com\project\dto\request\LeaveRequest.class
 com\project\entity\DoctorProfile$DoctorProfileBuilder.class
 com\project\service\email\EmailService.class
@@ -43,6 +44,7 @@ com\project\repository\NotificationRepository.class
 com\project\entity\Appointment.class
 com\project\entity\MedicationSchedule$MedicationScheduleBuilder.class
 com\project\service\NotificationService.class
+com\project\controller\AdminStatsController.class
 com\project\entity\NotificationType.class
 com\project\entity\NotificationStatus.class
 com\project\service\DoctorAvailabilityService.class
@@ -86,6 +88,7 @@ com\project\config\DataSeeder.class
 com\project\controller\DoctorAppointmentController.class
 com\project\security\JwtAuthenticationEntryPoint.class
 com\project\dto\request\RegisterRequest$RegisterRequestBuilder.class
+com\project\service\AdminStatsService.class
 com\project\HealthcareManagerApplication.class
 com\project\service\llm\GeminiLlmProvider.class
 com\project\service\email\MockEmailService.class

@@ -1,32 +1,43 @@
 # Architecture Overview
 
-## 1. System Components
-- **Frontend**: Single Page Application (SPA) built with React 19, Vite, and React Router.
-- **Backend**: REST API built with Spring Boot 3 and Java 17.
-- **Database**: PostgreSQL for relational data storage.
+## 1. System Topology
+The Healthcare Appointment & Follow-up Manager is designed using a decoupled, client-server topology consisting of:
+- **Frontend SPA**: React 19 single-page application built using Vite and Tailwind CSS.
+- **Backend API**: Stateless REST API built on Spring Boot 3.3.2 and Java 17.
+- **Database**: PostgreSQL 16 relational database for persistent storage.
+- **External Integration Layer**: Interconnected third-party provider APIs (Google Calendar OAuth 2.0, SendGrid, and Google Gemini LLM) with strategy abstractions.
 
-## 2. Request Flow
-1. User interacts with the Frontend (React SPA).
-2. Frontend makes HTTP requests via Axios to the Backend REST API.
-3. Controller layer intercepts the request, validates input DTOs, and delegates to the Service layer.
-4. Service layer applies business logic and uses the Repository layer for data access.
-5. Repository layer interacts with PostgreSQL via Spring Data JPA.
-6. The flow reverses, mapping Entities to response DTOs to return to the Frontend.
+```mermaid
+graph TD
+    User([User Browser]) -->|HTTP REST + JWT| Controller[REST Controller Layer]
+    Controller -->|DTO| Service[Service Layer]
+    Service -->|Entities| Repository[Repository Layer]
+    Repository -->|JPA/SQL| DB[(PostgreSQL Database)]
+    
+    Service -->|Async| Sync[CalendarSyncService]
+    Service -->|Async| Email[NotificationService]
+    Service -->|LLM Interface| LLM[LLMService]
+    
+    Sync -->|OAuth 2.0 / REST| GCal[Google Calendar API]
+    Email -->|SMTP / SMTP Client| SendGrid[SendGrid / Mock Email]
+    LLM -->|REST Client| Gemini[Google Gemini API]
+```
 
-## 3. Package Structure (Backend)
-- `controller`: REST API endpoints.
-- `service`: Business logic interfaces and implementations.
-- `repository`: Spring Data JPA interfaces.
-- `entity`: JPA domain models.
-- `dto`: Data Transfer Objects for API requests and responses.
-- `exception`: Global exception handling and custom exceptions.
-- `security`: Authentication, authorization, and CORS configurations.
-- `mapper`: Mapping between Entities and DTOs.
-- `scheduler`: Background tasks.
-- `integration`: External services (LLM, Email, Calendar).
-- `util`: Utility classes.
+## 2. Package Structure (Backend)
+The backend project layout separates concerns cleanly:
+- `com.project.config`: Application, Security, Calendar, and ThreadPool configurations.
+- `com.project.controller`: Endpoints enforcing RBAC authentication.
+- `com.project.dto`: Request/Response structures validating parameters at boundaries.
+- `com.project.entity`: JPA persistence mappings representing the database schema.
+- `com.project.exception`: RestControllerAdvice handling errors globally to prevent stack leakage.
+- `com.project.repository`: JPA repositories defining query boundaries.
+- `com.project.scheduler`: Background schedulers (Reminders & Retry queues).
+- `com.project.security`: JWT processing filters and authentication entry points.
+- `com.project.service`: Business rules, transactions, and LLM orchestration.
+- `com.project.service.calendar`: OAuth 2.0 integrations (Google & Mock).
+- `com.project.service.email`: Mailing services (SendGrid & Mock).
 
-## 4. External Integrations (Planned)
-- **LLM**: For generating pre-visit symptom summaries and post-visit patient-friendly summaries.
-- **Email**: For booking confirmations and reminders.
-- **Google Calendar**: For syncing appointments.
+## 3. Reliability & Integration Layer
+To prevent third-party outages from compromising core transactions:
+- **Asynchronous Execution**: Thread pools manage tasks for notifications (`NotificationService`) and Google Calendar updates (`CalendarSyncService`).
+- **Fail-Safe Mechanism**: Database commits happen *before* the external APIs are called. If calendar or email services fail, the transaction is already written, a fallback state is saved, and a retry is queued without interrupting the user.

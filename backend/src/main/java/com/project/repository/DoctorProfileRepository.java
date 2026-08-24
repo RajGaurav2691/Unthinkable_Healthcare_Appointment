@@ -29,4 +29,5 @@ public interface DoctorProfileRepository extends JpaRepository<DoctorProfile, Lo
     // For patient search
     List<DoctorProfile> findByActiveStatusTrue();
     List<DoctorProfile> findByActiveStatusTrueAndSpecializationContainingIgnoreCase(String specialization);
+    long countByActiveStatusTrue();
 }

@@ -4,6 +4,7 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\LlmConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\SecurityConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AdminDoctorController.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AdminStatsController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AuthController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\CalendarController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\DoctorAppointmentController.java
@@ -42,6 +43,7 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\UrgencyLevel.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\User.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\entity\WorkingSchedule.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\exception\ApiError.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\exception\GlobalExceptionHandler.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\HealthcareManagerApplication.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\repository\AppointmentRepository.java
@@ -60,6 +62,7 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\security\JwtAuthenticationEntryPoint.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\security\JwtAuthenticationFilter.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\security\JwtService.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\AdminStatsService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\AppointmentService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\AuthService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\calendar\CalendarService.java

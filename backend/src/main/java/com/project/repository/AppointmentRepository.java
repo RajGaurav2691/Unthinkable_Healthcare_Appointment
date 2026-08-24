@@ -29,4 +29,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("SELECT a FROM Appointment a WHERE a.status = 'CONFIRMED' AND a.appointmentDate = :date")
     List<Appointment> findConfirmedAppointmentsForDate(@Param("date") LocalDate date);
+
+    long countByStatus(AppointmentStatus status);
+    long countByAppointmentDate(LocalDate date);
+
+    List<Appointment> findByStatusOrderByAppointmentDateDescStartTimeDesc(AppointmentStatus status);
+    List<Appointment> findAllByOrderByAppointmentDateDescStartTimeDesc();
 }

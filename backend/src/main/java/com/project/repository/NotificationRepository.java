@@ -19,4 +19,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Query("SELECT COUNT(n) > 0 FROM Notification n WHERE n.recipient = :recipient AND n.type = :type AND n.createdAt >= :startOfDay")
     boolean existsByRecipientAndTypeSince(String recipient, NotificationType type, java.time.LocalDateTime startOfDay);
+
+    long countByStatus(NotificationStatus status);
 }
