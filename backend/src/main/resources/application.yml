@@ -23,3 +23,8 @@ application:
     enabled: ${EMAIL_ENABLED:false}
     sendgrid-api-key: ${SENDGRID_API_KEY:}
     from-email: ${EMAIL_FROM:noreply@example.com}
+  google:
+    calendar-enabled: ${GOOGLE_CALENDAR_ENABLED:false}
+    client-id: ${GOOGLE_CLIENT_ID:}
+    client-secret: ${GOOGLE_CLIENT_SECRET:}
+    redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:8083/api/calendar/callback}

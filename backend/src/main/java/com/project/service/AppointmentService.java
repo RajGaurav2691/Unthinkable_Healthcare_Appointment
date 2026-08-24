@@ -46,6 +46,7 @@ public class AppointmentService {
     private final NotificationService notificationService;
     private final MedicationScheduleRepository medicationScheduleRepository;
     private final ObjectMapper objectMapper;
+    private final CalendarSyncService calendarSyncService;
 
     @Transactional
     public AppointmentResponse holdSlot(HoldRequest request, String patientEmail) {
@@ -123,9 +124,13 @@ public class AppointmentService {
         appointment = appointmentRepository.save(appointment);
 
         String subject = "Appointment Confirmed with Dr. " + appointment.getDoctor().getUser().getName();
-        String body = String.format("Dear %s,\n\nYour appointment is confirmed for %s at %s.\n\nThank you.", 
+        String body = String.format("Dear %s,\n\nYour appointment is confirmed for %s at %s.\n\nThank you.",
                 appointment.getPatient().getName(), appointment.getAppointmentDate(), appointment.getStartTime());
         notificationService.queueNotification(patientEmail, NotificationType.APPOINTMENT_CONFIRMATION, subject, body, appointment);
+
+        // Fire async calendar sync — NEVER blocks booking
+        final Appointment confirmedAppointment = appointment;
+        calendarSyncService.syncAppointmentCreation(confirmedAppointment);
 
         return mapToResponse(appointment);
     }
@@ -162,6 +167,9 @@ public class AppointmentService {
         String doctorBody = String.format("Dear Dr. %s,\n\nThe appointment on %s at %s with patient %s has been cancelled.",
                 appointment.getDoctor().getUser().getName(), appointment.getAppointmentDate(), appointment.getStartTime(), appointment.getPatient().getName());
         notificationService.queueNotification(appointment.getDoctor().getUser().getEmail(), NotificationType.APPOINTMENT_CANCELLATION, doctorSubject, doctorBody, appointment);
+
+        // Fire async calendar cancellation — NEVER blocks cancellation
+        calendarSyncService.syncAppointmentCancellation(appointment);
     }
 
     @Transactional
