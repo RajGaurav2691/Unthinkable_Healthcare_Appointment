@@ -59,6 +59,12 @@ public class Appointment {
     @Column(name = "prescription", columnDefinition = "TEXT")
     private String prescription;
 
+    @Column(name = "ai_suggested_questions", columnDefinition = "TEXT")
+    private String aiSuggestedQuestions;
+
+    @Column(name = "post_visit_ai_summary", columnDefinition = "TEXT")
+    private String postVisitAiSummary;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

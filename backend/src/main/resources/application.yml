@@ -14,3 +14,8 @@ application:
   admin:
     email: ${ADMIN_EMAIL:admin@example.com}
     password: ${ADMIN_PASSWORD:admin123}
+  llm:
+    provider: ${LLM_PROVIDER:mock}
+    api-url: ${LLM_API_URL:https://generativelanguage.googleapis.com/v1beta}
+    api-key: ${LLM_API_KEY:}
+    model: ${LLM_MODEL:gemini-1.5-flash}

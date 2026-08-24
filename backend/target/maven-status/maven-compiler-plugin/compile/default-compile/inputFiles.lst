@@ -1,4 +1,5 @@
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\DataSeeder.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\LlmConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\config\SecurityConfig.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AdminDoctorController.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\controller\AuthController.java
@@ -47,4 +48,7 @@ C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\projec
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\AuthService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\DoctorAdminService.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\DoctorAvailabilityService.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\llm\GeminiLlmProvider.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\llm\LlmProvider.java
+C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\llm\MockLlmProvider.java
 C:\Users\rajga\OneDrive\Desktop\RAJ\Unthinkable\backend\src\main\java\com\project\service\LlmIntegrationService.java

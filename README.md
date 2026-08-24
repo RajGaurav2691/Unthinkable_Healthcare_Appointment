@@ -23,6 +23,26 @@ Copy `.env.example` to `.env` in the root directory and configure the variables.
 2. Run `npm install`.
 3. Run `npm run dev`.
 
+### LLM Configuration
+The system features an interchangeable LLM provider architecture for AI summaries. 
+- Set `LLM_PROVIDER=mock` to use the fallback mock provider (does not require API keys or network requests).
+- Set `LLM_PROVIDER=gemini` to use the real Google Gemini API (requires `LLM_API_KEY`).
+
+```env
+POSTGRES_DB=healthcare
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your_password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+
+JWT_SECRET=your_super_secret_jwt_key_that_should_be_very_long
+
+LLM_PROVIDER=mock
+LLM_API_KEY=your_gemini_api_key_here
+LLM_API_URL=https://generativelanguage.googleapis.com/v1beta
+LLM_MODEL=gemini-1.5-flash
+```
+
 ## Authentication Setup (Phase 2)
 
 ### Backend

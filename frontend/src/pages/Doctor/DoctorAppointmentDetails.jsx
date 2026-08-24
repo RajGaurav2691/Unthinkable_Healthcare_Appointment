@@ -120,14 +120,36 @@ export default function DoctorAppointmentDetails() {
             <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
               ✨ AI Assessment
               {appointment.urgencyLevel && (
-                <span className={`px-2 py-1 text-xs uppercase border rounded ${getUrgencyColor(appointment.urgencyLevel)}`}>
+                <span className={`px-2 py-1 text-xs uppercase font-bold border rounded ${getUrgencyColor(appointment.urgencyLevel)}`}>
                   {appointment.urgencyLevel} URGENCY
                 </span>
               )}
             </h3>
-            <div className="bg-blue-50 p-4 rounded-lg text-blue-900 border border-blue-100">
-              {appointment.aiSummary}
+            <div className="bg-blue-50 p-4 rounded-lg text-blue-900 border border-blue-100 mb-4">
+              <strong>Chief Complaint Summary:</strong> {appointment.aiSummary}
             </div>
+            
+            {(() => {
+              try {
+                if (!appointment.aiSuggestedQuestions) return null;
+                const parsed = JSON.parse(appointment.aiSuggestedQuestions);
+                if (parsed.suggestedQuestions && parsed.suggestedQuestions.length > 0) {
+                  return (
+                    <div className="bg-indigo-50 p-4 rounded-lg text-indigo-900 border border-indigo-100">
+                      <strong className="block mb-2">Suggested Questions for Patient:</strong>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {parsed.suggestedQuestions.map((q, i) => (
+                          <li key={i}>{q}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                }
+              } catch (e) {
+                // Ignore parse errors
+              }
+              return null;
+            })()}
           </div>
         )}
 

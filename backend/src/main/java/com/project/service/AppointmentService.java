@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import com.project.dto.request.AppointmentCompleteRequest;
+import com.project.service.LlmIntegrationService.PreVisitLlmResult;
+import com.project.dto.request.AppointmentCompleteRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -100,11 +102,12 @@ public class AppointmentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Appointment is not in HELD state");
         }
 
-        LlmIntegrationService.LlmResult llmResult = llmIntegrationService.processSymptoms(request.getSymptoms());
+        PreVisitLlmResult llmResult = llmIntegrationService.processSymptoms(request.getSymptoms());
 
         appointment.setSymptoms(request.getSymptoms());
         appointment.setAiSummary(llmResult.summary());
         appointment.setUrgencyLevel(llmResult.urgencyLevel());
+        appointment.setAiSuggestedQuestions(llmResult.rawJson()); // We store the whole raw JSON for easy retrieval of the array
         appointment.setStatus(AppointmentStatus.CONFIRMED);
 
         appointment = appointmentRepository.save(appointment);
@@ -148,8 +151,11 @@ public class AppointmentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only CONFIRMED appointments can be completed");
         }
 
+        String postVisitSummary = llmIntegrationService.generatePostVisitSummary(request.getClinicalNotes(), request.getPrescription());
+
         appointment.setClinicalNotes(request.getClinicalNotes());
         appointment.setPrescription(request.getPrescription());
+        appointment.setPostVisitAiSummary(postVisitSummary);
         appointment.setStatus(AppointmentStatus.COMPLETED);
 
         appointment = appointmentRepository.save(appointment);
@@ -226,6 +232,8 @@ public class AppointmentService {
                 .urgencyLevel(appointment.getUrgencyLevel())
                 .clinicalNotes(appointment.getClinicalNotes())
                 .prescription(appointment.getPrescription())
+                .aiSuggestedQuestions(appointment.getAiSuggestedQuestions())
+                .postVisitAiSummary(appointment.getPostVisitAiSummary())
                 .createdAt(appointment.getCreatedAt())
                 .build();
     }
